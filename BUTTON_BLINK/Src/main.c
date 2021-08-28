@@ -1,11 +1,11 @@
 // AUTHOR: Jin Wei
 // AFFILIATION: Fudan Univ.
-// BOARD: DJI Robomaster Development Board Type A
+// BOARD: DJI Development Board Type A
 // CONTROLLER: STM32F427IIH6
-// FUNCTION: LED lights for a while when pressing the button.
-// DESCRIPTION: 
-//     LED: PE11, red; initially 0; 0-on, 1-off
-//     button: PB2, white; 0-release, 1-press
+// FUNCTION: LED turns on when pressing the button and maintains for a while after releasing the button.
+// DESCRIPTION:
+//     LED: E11, red; initially 0; 0 - on, 1 - off
+//     button: B2, white; 0 - release, 1 - press
 //     LED on duration: 0.5 sec
 
 /* USER CODE BEGIN Header */
@@ -96,19 +96,20 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_SET); // set LED to be extinguished at first
+	HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET); // set LED to be extinguished at first
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-		if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_2)){ // if button is pressed
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_RESET); // light on for 0.5 sec
+		if(HAL_GPIO_ReadPin(BUTTON_GPIO_Port, BUTTON_Pin)){ // if button is pressed
+			HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET); // light on for 0.5 sec
 			HAL_Delay(500);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_SET); // light off
+			HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET); // light off
 		}
+    /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
