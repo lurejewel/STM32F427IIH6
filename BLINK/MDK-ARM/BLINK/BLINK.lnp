@@ -1,0 +1,26 @@
+--cpu=Cortex-M4.fp
+"blink\startup_stm32f427xx.o"
+"blink\main.o"
+"blink\gpio.o"
+"blink\stm32f4xx_it.o"
+"blink\stm32f4xx_hal_msp.o"
+"blink\stm32f4xx_hal_tim.o"
+"blink\stm32f4xx_hal_tim_ex.o"
+"blink\stm32f4xx_hal_rcc.o"
+"blink\stm32f4xx_hal_rcc_ex.o"
+"blink\stm32f4xx_hal_flash.o"
+"blink\stm32f4xx_hal_flash_ex.o"
+"blink\stm32f4xx_hal_flash_ramfunc.o"
+"blink\stm32f4xx_hal_gpio.o"
+"blink\stm32f4xx_hal_dma_ex.o"
+"blink\stm32f4xx_hal_dma.o"
+"blink\stm32f4xx_hal_pwr.o"
+"blink\stm32f4xx_hal_pwr_ex.o"
+"blink\stm32f4xx_hal_cortex.o"
+"blink\stm32f4xx_hal.o"
+"blink\stm32f4xx_hal_exti.o"
+"blink\system_stm32f4xx.o"
+--strict --scatter "BLINK\BLINK.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "BLINK.map" -o BLINK\BLINK.axf
