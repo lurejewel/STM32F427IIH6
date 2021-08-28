@@ -1,5 +1,5 @@
 // AUTHOR: Jin Wei
-// AFFLICATION: Fudan Univ.
+// AFFILIAION: Fudan Univ.
 // BOARD: DJI Robomaster Development Board Type A
 // CONTROLLER: STM32F427IIH6
 // FUNCTION: LED lights and extinguishes alternately

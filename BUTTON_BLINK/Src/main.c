@@ -1,5 +1,5 @@
 // AUTHOR: Jin Wei
-// AFFLICATION: Fudan Univ.
+// AFFILIATION: Fudan Univ.
 // BOARD: DJI Robomaster Development Board Type A
 // CONTROLLER: STM32F427IIH6
 // FUNCTION: LED lights for a while when pressing the button.
@@ -104,10 +104,10 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-		if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_2)){ // if b
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_RESET);
+		if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_2)){ // if button is pressed
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_RESET); // light on for 0.5 sec
 			HAL_Delay(500);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_SET); // light off
 		}
     /* USER CODE BEGIN 3 */
   }
