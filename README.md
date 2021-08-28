@@ -1,21 +1,21 @@
-#### STM32 Projects 
+# STM32 Projects 
 
-**Board**: DJI RoboMaster Development Board Type A
-**MCU**: STM32F427IIH6
-**Initialization Tool**:STM32CubeMX
+**Board**: DJI RoboMaster Development Board Type A\
+**MCU**: STM32F427IIH6\
+**Initialization Tool**:STM32CubeMX\
 **Development Tool**: Keil V5
 
-**Author**: Jin Wei
+**Author**: Jin Wei\
 **Affiliation**: Fudan Univ.
 
 - - -
 
 ### BLINK
 
-**LED light goes on and off alternately.**
-LED: E11, red; 0 - on, 1 - off
-LED on duration: 0.8 sec
-LED off duration: 0.2 sec
+**LED light goes on and off alternately.**\
+LED: E11, red; 0 - on, 1 - off\
+LED on duration: 0.8 sec\
+LED off duration: 0.2 sec\
 Cycle: 1.0 sec
 
 **Learning Point:**
@@ -26,10 +26,12 @@ Cycle: 1.0 sec
 
 ### BUTTON BLINK
 
-**LED light goes on shortly while pressing the button.**
-LED: same as "BLINK"
-Button: B2, white; 0 - release, 1 - press
-LED on duration: 0.5 sec
+**LED light goes on shortly while pressing the button.**\
+LED: same as "BLINK"\
+Button: B2, white; 0 - release, 1 - press\
+LED on duration: 0.5 sec\
+
+**Learning Point:**
 - Use of ``if`` statement
 - Basic functions of ``HAL_ReadPin(GPIOx, GPIO_PIN_x)``
 - Use "*Go To Definition of*" to switch to the definition statement of the function or variable
