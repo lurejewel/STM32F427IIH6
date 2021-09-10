@@ -95,7 +95,7 @@ int main(void)
   MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
 	// while(!(&huart8)->RxState == HAL_UART_STATE_READY); // wait until UART8 is ready for reception
-	HAL_UART_Receive_IT(&huart8, &data, 1); // open the reception interruption
+	HAL_UART_Receive_IT(&huart6, &data, 1); // open the reception interruption
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -104,8 +104,7 @@ int main(void)
   {
 		
     /* USER CODE END WHILE */
-		uint8_t dT = 0x31;
-		HAL_UART_Transmit(&huart8, (uint8_t *)&dT, 1, 0xFFFF); // check if callback function works
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -159,18 +158,18 @@ void SystemClock_Config(void)
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	//UNUSED(huart);
-	uint8_t dT = 0x31;
-	HAL_UART_Transmit(&huart8, (uint8_t *)&dT, 1, 0xFFFF); // check if callback function works
-	if(huart->Instance == UART8){
+	// uint8_t dT = 0x31;
+	// HAL_UART_Transmit(&huart8, (uint8_t *)&dT, 1, 0xFFFF); // check if callback function works
+	if(huart->Instance == USART6){
 		RxBuffer[pBuffer++] = data;
-		if(pBuffer>1 && RxBuffer[pBuffer-2] == 0x0D && RxBuffer[pBuffer-1] == 0x0A){
+		if((pBuffer>1 && RxBuffer[pBuffer-2] == 0x0D && RxBuffer[pBuffer-1] == 0x0A) || (pBuffer >= 255)){
 			// dT = 0x32;
 			HAL_UART_Transmit(&huart8, (uint8_t *)&RxBuffer, pBuffer, 0xFFFF); // transmit data from buffer
 			while(HAL_UART_GetState(&huart8) == HAL_UART_STATE_BUSY_TX); // wait until transmission is over
 			pBuffer = 0;
 		}
 	}
-	HAL_UART_Receive_IT(&huart8, (uint8_t *)&data, 1); // re-open the reception interruption
+	HAL_UART_Receive_IT(&huart6, (uint8_t *)&data, 1); // re-open the reception interruption
 }
 /* USER CODE END 4 */
 
