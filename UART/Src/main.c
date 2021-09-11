@@ -21,6 +21,8 @@
 #include "main.h"
 #include "usart.h"
 #include "gpio.h"
+#include <math.h>
+// #include <string.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -51,10 +53,13 @@
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 
-uint8_t RxBuffer[256]; // buffer for data received
+uint8_t RxBuffer[11]; // buffer for data received
 uint8_t pBuffer = 0; // data counter
-uint8_t data; // data received
-// uint8_t dT[256]; // data transmitted
+uint8_t data; // single data received
+uint8_t sum = 0; // sum of the data in buffer
+double angleY_DEC = 0.0; // angle of Y axis in HEX
+uint8_t angleY_ASCII[8] = {43,48,48,48,46,48,48,48}; // angle of Y axis in ASCII; +xxx.xxx or -xxx.xxx
+uint8_t enter[2] = {0x0D, 0x0A}; // carriage return
 
 /* USER CODE END PFP */
 
@@ -157,18 +162,58 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	//UNUSED(huart);
-	// uint8_t dT = 0x31;
-	// HAL_UART_Transmit(&huart8, (uint8_t *)&dT, 1, 0xFFFF); // check if callback function works
 	if(huart->Instance == USART6){
+		if(data == 0x55){ // head of packet
+			pBuffer = 0; // set 0x55 head head
+			memset(RxBuffer, 0, 11*sizeof(uint8_t)); // clear the buffer
+			RxBuffer[pBuffer++] = data; // save 0x55 and move the pointer
+			sum = data; // calculate sum of the buffer data by data
+		}
+		else{
+			RxBuffer[pBuffer++] = data; // save the data and move the pointer
+			if(pBuffer == 11){ // end of the buffer, also should be end of the packet
+				if(sum == data && RxBuffer[1] == 0x53){ // packet is correct
+					//HAL_UART_Transmit(&huart8, RxBuffer, 11, 0xFFFF); // for test
+					
+					angleY_DEC = ((int)((RxBuffer[5]<<8)|RxBuffer[4])/32768.0*180); // Y axis of angle; converted
+					if(angleY_DEC > 180){
+						angleY_DEC = 360 - angleY_DEC;
+						angleY_ASCII[0] = (uint8_t)45;
+					}
+					else
+						angleY_ASCII[0] = (uint8_t)43;
+					uint8_t bit; // bitwise value
+					for(int i = 0; i < 3; ++i){ // integral bits
+						bit = (uint8_t)(angleY_DEC / pow(10, 2-i) + 48); // convert to ASCII value bitwise
+						angleY_ASCII[i+1] = bit; // assignment
+						angleY_DEC -= (bit-48) * pow(10, 2-i);
+					}
+					for(int i = 4; i < 7; ++i){ // decimal bits; same as above
+						bit = (uint8_t)(angleY_DEC / pow(10, 3-i) + 48);
+						angleY_ASCII[i+1] = bit;
+						angleY_DEC -= (bit-48) * pow(10, 3-i);
+					}
+					HAL_UART_Transmit(&huart8, angleY_ASCII, 8, 0xFFFF); // transmit
+					HAL_UART_Transmit(&huart8, enter, 2, 0xFFFF); // carriage return
+					
+					pBuffer = 0; // move the point to head of the buffer
+					sum = 0; // clear sum of the buffer
+				}
+			}
+			else{ // middle of the buffer
+				sum += data; // calculate sum of the buffer data by data
+			}
+		}
+		/*
 		RxBuffer[pBuffer++] = data;
 		if((pBuffer>1 && RxBuffer[pBuffer-2] == 0x0D && RxBuffer[pBuffer-1] == 0x0A) || (pBuffer >= 255)){
-			// dT = 0x32;
 			HAL_UART_Transmit(&huart8, (uint8_t *)&RxBuffer, pBuffer, 0xFFFF); // transmit data from buffer
 			while(HAL_UART_GetState(&huart8) == HAL_UART_STATE_BUSY_TX); // wait until transmission is over
 			pBuffer = 0;
 		}
+		*/
 	}
+	
 	HAL_UART_Receive_IT(&huart6, (uint8_t *)&data, 1); // re-open the reception interruption
 }
 /* USER CODE END 4 */

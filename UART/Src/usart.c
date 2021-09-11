@@ -19,7 +19,23 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "usart.h"
-
+/**
+#if 1
+#pragma import(__use_no_semihosting)
+struct __FILE{
+	int handle;
+};
+FILE __stdout;
+_sys_exit(int x){
+	x = x;
+}
+int fputc(int ch, FILE *f){
+	while((UART8->SR&0X40) == 0);
+	UART8->DR = (u8)ch;
+	return ch;
+}
+#endif
+**/
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
