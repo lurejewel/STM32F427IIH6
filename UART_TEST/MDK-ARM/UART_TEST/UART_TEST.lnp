@@ -1,0 +1,28 @@
+--cpu=Cortex-M4.fp
+"uart_test\startup_stm32f427xx.o"
+"uart_test\main.o"
+"uart_test\gpio.o"
+"uart_test\usart.o"
+"uart_test\stm32f4xx_it.o"
+"uart_test\stm32f4xx_hal_msp.o"
+"uart_test\stm32f4xx_hal_tim.o"
+"uart_test\stm32f4xx_hal_tim_ex.o"
+"uart_test\stm32f4xx_hal_uart.o"
+"uart_test\stm32f4xx_hal_rcc.o"
+"uart_test\stm32f4xx_hal_rcc_ex.o"
+"uart_test\stm32f4xx_hal_flash.o"
+"uart_test\stm32f4xx_hal_flash_ex.o"
+"uart_test\stm32f4xx_hal_flash_ramfunc.o"
+"uart_test\stm32f4xx_hal_gpio.o"
+"uart_test\stm32f4xx_hal_dma_ex.o"
+"uart_test\stm32f4xx_hal_dma.o"
+"uart_test\stm32f4xx_hal_pwr.o"
+"uart_test\stm32f4xx_hal_pwr_ex.o"
+"uart_test\stm32f4xx_hal_cortex.o"
+"uart_test\stm32f4xx_hal.o"
+"uart_test\stm32f4xx_hal_exti.o"
+"uart_test\system_stm32f4xx.o"
+--strict --scatter "UART_TEST\UART_TEST.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "UART_TEST.map" -o UART_TEST\UART_TEST.axf

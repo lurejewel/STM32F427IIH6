@@ -5,8 +5,8 @@
 // FUNCTION: LED lights and extinguishes alternately
 // DESCRIPTION: 
 //     LED: PE11, red; initially 0; 0-on, 1-off
-//     LED on & off duration: 0.5 sec
-//     LED on & off cycle: 1.0 sec
+//     LED on duration: 0.8 sec
+//     LED off duration: 0.2 sec
 
 /* USER CODE BEGIN Header */
 /**

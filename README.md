@@ -31,7 +31,7 @@ Cycle: 1.0 sec
 
 LED: same as "BLINK"\
 Button: PB2, white; 0 - release, 1 - press\
-LED on duration: 0.5 sec\
+LED on duration: 0.5 sec
 
 #### Learning Point:
 - Comprehension of ``if`` statement

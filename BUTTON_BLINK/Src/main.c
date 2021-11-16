@@ -4,7 +4,7 @@
 // CONTROLLER: STM32F427IIH6
 // FUNCTION: LED turns on when pressing the button and maintains for a while after releasing the button.
 // DESCRIPTION:
-//     LED: E11, red; initially 0; 0 - on, 1 - off
+//     LED: E11, red; initially 1; 0 - on, 1 - off
 //     button: B2, white; 0 - release, 1 - press
 //     LED on duration: 0.5 sec
 
